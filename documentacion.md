@@ -30,3 +30,14 @@ El **enumerate()** me permite recorrer datos de manera enumerada, como bien dice
 Se implementa la librería **FastAPI** para poder crear rutas api de manera rápida y sencilla. La aplicación de inicializa definiendo una variable como **FastAPI()** y, con esta misma variable, vas creando las diferentes rutas, lo que va a hacer esa ruta y los métodos que se van a utilizar en estas del **CRUD (Create, Read, Update, Delete)**.
 
 El **HTMLException** funciona igual que el **raise ValueError**, en el sentido de que sirve para lanzar errores mediante cualquier excepción, solo que, con **HTMLException**, vas a proporcionar el código de error (Ej: 400), y luego un mensaje detallando el error, siendo similar que **raise ValueError** pero para las apis.
+
+### Día 3 (11-11-2025 - 12-11-2025)
+- Termine de implementar todas las funciones que utilizan el modulo de **api-usuarios.py** para que se puedan ejecutar en otro módulo, que en este caso es el **main.py**. Arreglo de varias de las funciones para que puedan funcionar bien con las APIs
+- También corregí y añadi más métodos CRUD en el **api-usuarios.py**
+
+## Notas Día 3
+Es importante que, para cada acción que involucre añadir o actualizar un usuario, se debe crear un nuevo diccionario para luego añadirlos/actualizarlos en la lista donde se almacenan todos los usuarios. También, para estas mismas dos cosas y (creo), eliminar usuarios, devolver el usuario para que las funciones de **functions.py** sepan con que datos tienen que trabajar.
+
+Revisar que siempre que los datos que se analicen sean los correctos.
+
+Siempre recordar como definiste lo que devuelve una ruta (Tuve muchos errores por olvidarme de eso). También para comprender que es lo que quiere lograr y a los índices a los que se quieren acceder.

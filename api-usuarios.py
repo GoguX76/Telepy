@@ -74,33 +74,40 @@ def registrar_usuarios(usuario: Usuario):
     usuarios_sistema.append(new_user) #Aquí los agrega a la lista donde van todos los usuarios.
 
     return {
-        "mensaje": "¡El usuario ha sido registrado de manera exitosa!"
+        "mensaje": "¡El usuario ha sido registrado de manera exitosa!",
+        "usuario": new_user
     }
 
-@app.put("usuarios/actualizar/{id}")
-def actualizar_usuario(usuario: Usuario, id: int):
-    for i, usuario in enumerate(usuarios_sistema,1):
+#Función que permite actualizar los datos de un usuario ya existente mediante su id.
+@app.put("/usuarios/actualizar/{id}")
+def actualizar_usuario(user: Usuario, id: int):
+    #Recorre y evalua los nuevos datos a actualizar.
+    for i, usuario in enumerate(usuarios_sistema):
         if usuario['id'] == id:
-            if not validacionUsuario(usuario.Nombre):
+            if not validacionUsuario(user.Nombre):
                 raise HTTPException(status_code=400, detail="Nombre inválido")
             
-            if not validacionEdad(usuario.Edad):
+            if not validacionEdad(user.Edad):
                 raise HTTPException(status_code=400, detail="Edad inválida")
             
-            if not validacionGenero(usuario.Genero):
+            if not validacionGenero(user.Genero):
                 raise HTTPException(status_code=400, detail="Genero inválido")
 
-            genero_completo = "Masculino" if usuario.Genero == "M" else "Femenino"
+            genero_completo = "Masculino" if user.Genero == "M" else "Femenino"
 
-            usuarios_sistema[i] = {
+            #Inserta los nuevos datos en el sistema.
+            usuario_actualizado = {
                 "id": id,
-                "Nombre": usuario.Nombre,
-                "Edad": usuario.Edad,
+                "Nombre": user.Nombre,
+                "Edad": user.Edad,
                 "Genero": genero_completo
             }
 
+            usuarios_sistema[i] = usuario_actualizado #Aquí actualiza los datos en la lista.
+
             return {
-                "mensaje": "Los datos del usuario han sido actualizados correctamente"
+                "mensaje": "Los datos del usuario han sido actualizados correctamente",
+                "usuario": usuario_actualizado #Devuelve al usuario actualizado.
             }
     raise HTTPException(
         status_code = 404,
