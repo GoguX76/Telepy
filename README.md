@@ -5,8 +5,8 @@
 ### 🤓 Sobre el Repositorio
 Este repositorio almacena todo lo que realizo para practicar para la siguiente Bothaton que se hará en DuocUC
 
-🔹 Todo está desarrollado en Python
-🔹 Se implementan API REST, bots, simulación de un sistema y mucho más
+🔹 Todo está desarrollado en Python <br>
+🔹 Se implementan API REST, bots, simulación de un sistema y mucho más <br>
 🔹 Estos puntos se irán actualizando según y todo lo que implemente con el paso de los días
 
 ### 📍 Pequeño aviso
