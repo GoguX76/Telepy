@@ -1,8 +1,8 @@
-from fastapi import HTTPException
 import requests as rq
-import random as rd
 import uvicorn
 import time as tm
+import threading as th
+import telebot as tl
 
 API_URL = "http://localhost:8000" #Variable que tendra el valor del localhost para manejar las rutas apis.
 
@@ -14,12 +14,13 @@ def verificar_api():
     except:
         return False #Si no devuelve nada, retorna False
     
+#Función que inicia la API.
 def iniciar_api():
     import threading as th
 
     #Función que ejecuta el comando para iniciar la API.
     def run_api():
-        uvicorn.run("api-usuarios:app", host="127.0.0.1", port=8000, log_level="info")
+        uvicorn.run("apis.api-usuarios:app", host="127.0.0.1", port=8000, log_level="info")
 
     api_thread = th.Thread(target=run_api, daemon=True) #Ejecuta un hilo donde ejecutará la función de iniciar la API.
     api_thread.start() #Se ejecuta el Hilo.
@@ -37,6 +38,22 @@ def iniciar_api():
 
     print("No se pudo iniciar la API")
     return False
+
+#Función que inicia el bot de Telegram.
+def iniciar_bot():
+
+    #Función que levanta al bot de Telegram.
+    def run_bot():
+        print("Inciando al bot...")
+        try:
+            from bot.usuarios_bot import usuarios_bot #Importación del bot aquí.
+            usuarios_bot.polling(none_stop=True) #Se le indica al bot que no pare de ver si hay mensajes nuevos del usuario.
+        except Exception as e:
+            print(f"Error al iniciar al bot: {e}")
+
+    bot_thread = th.Thread(target=run_bot, daemon=True) #Crea una ayuda para ejecutar al bot.
+    bot_thread.start() #Inicia al bot.
+    print("Bot de telegram iniciado correctamente.")
 
 #Función que crea un usuario en el sistema mediante las apis creadas.
 def crear_usuario_api():
@@ -191,6 +208,8 @@ def main():
             print("Error: No se pudo iniciar la API")
             print("Ejecuta la API manualmente en la terminal con: uvicorn api-usuarios:app --reload")
             return
+        
+    iniciar_bot()
 
     #Ejecuta el menu en un ciclo while y las funciones que llaman a las APIs.
     while True:

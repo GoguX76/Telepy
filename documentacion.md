@@ -48,3 +48,10 @@ Siempre recordar como definiste lo que devuelve una ruta (Tuve muchos errores po
 
 ## Notas Día 4
 > A pesar de no haber probado ni implementar las cosas del bot de manera más completa, no parece ser complicado. La estructura de las cosas es fácil de entender, como pedir que maneje tal función si el usuario inserta x mensaje y hacer que el bot muestre ese mensaje. Quizá se complica más cuando sea la hora de que el bot use las APIs creadas, pero eso lo veremos cuando pruebe todo paso a paso.
+
+### Día 5 (13-11-2025)
+- Ya he recuperado la buena conexión ha internet. Ya iré comentando los cambios que realizaré por debajo de esto.
+- Implementación de nuevas funciones para el bot de Telegram que permiten registrar y mostrar a los usuarios en el sistema, este mismo conectándose a la API para su correcto funcionamiento.
+- Decidí agregar comentarios (por lo menos, por esta ocasión), más detallados sobre cada cosa, para que se entienda mejor.
+
+> Al final, como dije en la nota del día anterior, tan difícil no es configurar los mensajes y cosas que hará el bot, pero si es tedioso y puedes cometer errores por eso mismo. Cada cosa, como es iniciar el bot o la API se hacen mediante funciones en el módulo **functions.py**, que luego son llamados en el archivo **main.py** para evitar la molesta tarea de escribir los comandos de ejecución de cada uno mediante consola.
