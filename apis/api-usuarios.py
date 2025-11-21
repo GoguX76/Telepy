@@ -113,3 +113,22 @@ def actualizar_usuario(user: Usuario, id: int):
         status_code = 404,
         detail = "El usuario no ha sido encontrado en el sistema"
     )
+
+#Ruta API que permite eliminar un usuario del sistema mediante su ID con el método DELETE.
+@app.delete("/usuarios/eliminar/{id}")
+def eliminar_usuario(id: int):
+    #Busca el usuario por ID y lo elimina.
+    for i, usuario in enumerate(usuarios_sistema):
+        if usuario['id'] == id:
+            usuario_eliminado = usuarios_sistema.pop(i) #Elimina el usuario de la lista.
+            
+            return {
+                "mensaje": "El usuario ha sido eliminado exitosamente del sistema",
+                "usuario": usuario_eliminado #Devuelve los datos del usuario eliminado.
+            }
+    
+    #Si no encuentra el usuario, lanza un error.
+    raise HTTPException(
+        status_code=404,
+        detail=f"El usuario con id {id} no ha sido encontrado en el sistema"
+    )

@@ -22,8 +22,10 @@ def help_command(message):
         "Comandos Disponibles\n\n"
         "/start - Iniciar el bot\n"
         "/help - Ver esta ayuda\n"
-        "/registrar - Registras a un usuario"
-        "/mostrar - Muestra a todos los usuarios en el sistema.",
+        "/registrar - Registras a un usuario\n"
+        "/mostrar - Muestra a todos los usuarios en el sistema\n"
+        "/buscar - Busca a un usuario mediante su ID\n"
+        "/borrar - Elimina a un usuario del sistema",
         parse_mode='Markdown'
     )
 
@@ -103,3 +105,67 @@ def mostrar_usuarios(message):
             usuarios_bot.reply_to(message, f"Error: {error['detail']}")
     except Exception as e:
         usuarios_bot.reply_to(message, f"Error al conectarse a la API: {e}")
+
+#Función que busca un usuario por ID mediante el comando '/buscar'
+@usuarios_bot.message_handler(commands=['buscar'])
+def buscar_usuario_comando(message):
+    msg = usuarios_bot.reply_to(message, "Ingrese el ID del usuario que desea buscar:")
+    usuarios_bot.register_next_step_handler(msg, procesar_busqueda_id)
+
+def procesar_busqueda_id(message):
+    try:
+        user_id = int(message.text) #Convierte el texto a número entero
+        
+        response = rq.get(f"{API_URL}/usuarios/{user_id}")
+
+        if response.status_code == 200:
+            result = response.json()
+            usuario = result['usuario']
+
+            usuarios_bot.reply_to(
+                message, 
+                "✅ Usuario encontrado\n\n"
+                f"ID: {usuario['id']}\n"
+                f"Nombre: {usuario['Nombre']}\n"
+                f"Edad: {usuario['Edad']}\n"
+                f"Género: {usuario['Genero']}")
+
+        else:
+            error = response.json()
+            usuarios_bot.reply_to(message, f"❌ Error: {error['detail']}")
+    except ValueError:
+        usuarios_bot.reply_to(message, "❌ Error: El ID debe ser un número válido")
+    except Exception as e:
+        usuarios_bot.reply_to(message, f"❌ Error al conectarse a la API: {e}")
+
+#Función que elimina a un usuario mediante el comando '/borrar'
+@usuarios_bot.message_handler(commands=['borrar'])
+def borrar_usuario(message):
+    msg = usuarios_bot.reply_to(message, "Ingrese el ID del usuario que desea eliminar del sistema:")
+    usuarios_bot.register_next_step_handler(msg, procesar_borrado_id)
+    
+def procesar_borrado_id(message):
+    try:
+        user_id = int(message.text)
+
+        response = rq.delete(f"{API_URL}/usuarios/eliminar/{user_id}")
+
+        if response.status_code == 200:
+            result = response.json()
+            usuario = result['usuario']
+
+            usuarios_bot.reply_to(
+                message,
+                "✅ Usuario eliminado exitosamente del sistema\n\n"
+                f"ID: {usuario['id']}\n"
+                f"Nombre: {usuario['Nombre']}\n"
+                f"Edad: {usuario['Edad']}\n"
+                f"Género: {usuario['Genero']}"
+            )
+        else:
+            error = response.json()
+            usuarios_bot.reply_to(message, f"❌ Error: {error['detail']}")
+    except ValueError:
+        usuarios_bot.reply_to(message, "❌ Error: El ID debe ser un número válido")
+    except Exception as e:
+        usuarios_bot.reply_to(message, f"❌ Error al conectarse a la API: {e}")
