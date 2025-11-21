@@ -55,10 +55,3 @@ Siempre recordar como definiste lo que devuelve una ruta (Tuve muchos errores po
 - Decidí agregar comentarios (por lo menos, por esta ocasión), más detallados sobre cada cosa, para que se entienda mejor.
 
 > Al final, como dije en la nota del día anterior, tan difícil no es configurar los mensajes y cosas que hará el bot, pero si es tedioso y puedes cometer errores por eso mismo. Cada cosa, como es iniciar el bot o la API se hacen mediante funciones en el módulo **functions.py**, que luego son llamados en el archivo **main.py** para evitar la molesta tarea de escribir los comandos de ejecución de cada uno mediante consola.
-
-### Día 7 (20-11-2025)
-- Es el último cambio que haré en este repositorio (de momento) debido a que, analizando lo que he estado haciendo, no me es útil para el evento de Bothaton.
-- Implementación de la API para el bot de Telegram que permite buscar un usuario mediante su ID y eliminar a uno mediante la misma, ya añadidas al bot de Telegram.
-
-## Notas Día 7
-> El rumbo de este repositorio, viéndolo a futuro, servirá más para aprender sobre como funcionan las APIs, las rutas, y más cosas que iré viendo en el futuro, cuando retome este repositorio.
